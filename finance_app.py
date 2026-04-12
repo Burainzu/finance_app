@@ -522,8 +522,7 @@ if st.session_state.selected_wallet:
                 value=default_amount,
                 min_value=0.0,
                 step=1000.0,
-                help="Masukkan jumlah uang",
-                format="%,.0f"
+                help="Masukkan jumlah uang"
             )
         with col4:
             category = st.selectbox(
