@@ -3,6 +3,196 @@ import sqlite3
 import pandas as pd
 from datetime import date
 
+# Custom CSS untuk tema soda yang cerah dan menyegarkan
+def set_soda_theme():
+    st.markdown("""
+        <style>
+        /* Tema Soda - Warna cerah, segar, dan energik */
+        :root {
+            --primary: #FF6B9D;      /* Pink cerah */
+            --secondary: #00D4FF;    /* Cyan terang */
+            --success: #6FFF5E;      /* Hijau neon */
+            --warning: #FFD60A;      /* Kuning bright */
+            --dark: #1a1a2e;         /* Gelap */
+            --light: #f8f9ff;        /* Putih biru */
+        }
+        
+        /* Background utama */
+        .stApp {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e0f7ff 50%, #fff5e6 100%);
+        }
+        
+        /* Header styling */
+        .stTitle {
+            color: #FF6B9D !important;
+            text-shadow: 0 2px 10px rgba(255, 107, 157, 0.3);
+            font-weight: 900;
+        }
+        
+        h1, h2, h3 {
+            background: linear-gradient(90deg, #FF6B9D 0%, #00D4FF 50%, #6FFF5E 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+        
+        /* Sidebar styling */
+        [data-testid="stSidebar"] {
+            background: linear-gradient(180deg, #FF6B9D 0%, #FF8AB5 100%);
+        }
+        
+        [data-testid="stSidebar"] h1,
+        [data-testid="stSidebar"] h2,
+        [data-testid="stSidebar"] h3 {
+            color: #fff !important;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            -webkit-text-fill-color: white;
+        }
+        
+        [data-testid="stSidebar"] p,
+        [data-testid="stSidebar"] [role="button"],
+        [data-testid="stSidebar"] div {
+            color: white;
+        }
+        
+        /* Button styling */
+        .stButton > button {
+            background: linear-gradient(90deg, #FF6B9D 0%, #00D4FF 100%) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 12px !important;
+            padding: 10px 20px !important;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3) !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .stButton > button:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 25px rgba(255, 107, 157, 0.4) !important;
+        }
+        
+        /* Input fields */
+        .stTextInput input,
+        .stNumberInput input,
+        .stDateInput input,
+        .stSelectbox select,
+        .stTextArea textarea {
+            background-color: white !important;
+            border: 2px solid #00D4FF !important;
+            border-radius: 10px !important;
+            padding: 10px !important;
+            color: #1a1a2e !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .stTextInput input:focus,
+        .stNumberInput input:focus,
+        .stDateInput input:focus,
+        .stSelectbox select:focus,
+        .stTextArea textarea:focus {
+            border-color: #FF6B9D !important;
+            box-shadow: 0 0 15px rgba(255, 107, 157, 0.4) !important;
+        }
+        
+        /* Expander styling */
+        .streamlit-expanderHeader {
+            background: linear-gradient(90deg, #00D4FF 0%, #6FFF5E 100%) !important;
+            color: white !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+        }
+        
+        /* Metric cards */
+        .metric-card {
+            background: linear-gradient(135deg, #FFFFFF 0%, #e0f7ff 100%);
+            border: 2px solid #00D4FF;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2);
+        }
+        
+        /* Success/Info/Error messages */
+        .stSuccess {
+            background-color: #e8f5e9 !important;
+            border-left: 4px solid #6FFF5E !important;
+            border-radius: 8px !important;
+        }
+        
+        .stError {
+            background-color: #ffebee !important;
+            border-left: 4px solid #FF6B9D !important;
+            border-radius: 8px !important;
+        }
+        
+        .stInfo {
+            background-color: #e0f7ff !important;
+            border-left: 4px solid #00D4FF !important;
+            border-radius: 8px !important;
+        }
+        
+        .stWarning {
+            background-color: #fff9e6 !important;
+            border-left: 4px solid #FFD60A !important;
+            border-radius: 8px !important;
+        }
+        
+        /* Container styling */
+        .stContainer {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* Divider styling */
+        hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, #FF6B9D, #00D4FF, #6FFF5E);
+        }
+        
+        /* Tab styling */
+        .stTabs [data-baseweb="tab-list"] button {
+            color: #1a1a2e !important;
+            font-weight: 700 !important;
+        }
+        
+        .stTabs [aria-selected="true"] {
+            border-bottom: 3px solid #FF6B9D !important;
+        }
+        
+        /* Transaction row styling */
+        .transaction-row {
+            background: linear-gradient(90deg, #FFFFFF 0%, #f0fbff 100%);
+            border-left: 4px solid #00D4FF;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .transaction-row:hover {
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.3);
+            transform: translateX(5px);
+        }
+        
+        /* Edit mode indicator */
+        .edit-mode-banner {
+            background: linear-gradient(90deg, #FFD60A, #FF6B9D);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(255, 214, 10, 0.3);
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
 # Database setup
 def init_db():
     conn = sqlite3.connect('finance.db')
@@ -157,10 +347,17 @@ def get_transaction_by_id(trans_id):
 # Initialize database
 init_db()
 
-# Streamlit UI
-st.set_page_config(page_title="Aplikasi Pencatatan Keuangan", layout="wide")
+# Streamlit UI Configuration
+st.set_page_config(
+    page_title="Aplikasi Pencatatan Keuangan", 
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-st.title("💰 Aplikasi Pencatatan Keuangan")
+# Apply Soda Theme
+set_soda_theme()
+
+st.title("🥤 Aplikasi Pengelola Keuangan - Soda Style")
 
 # Initialize session state
 if 'selected_wallet' not in st.session_state:
@@ -170,12 +367,12 @@ if 'edit_transaction_id' not in st.session_state:
 
 # Sidebar for wallet selection
 with st.sidebar:
-    st.header("👛 Dompet")
+    st.header("👛 KELOLA DOMPET")
     wallets = get_wallets()
     
     if not wallets.empty:
         wallet_options = wallets[['id', 'name']].values.tolist()
-        wallet_names = [f"{w[1]}" for w in wallet_options]
+        wallet_names = [f"💳 {w[1]}" for w in wallet_options]
         wallet_ids = [w[0] for w in wallet_options]
         
         selected_index = 0
@@ -185,78 +382,96 @@ with st.sidebar:
             except ValueError:
                 selected_index = 0
         
-        selected_wallet_name = st.selectbox("Pilih Dompet", wallet_names, index=selected_index)
+        selected_wallet_name = st.selectbox(
+            "🗂️ Pilih Dompet",
+            wallet_names,
+            index=selected_index,
+            key="wallet_select"
+        )
         st.session_state.selected_wallet = wallet_ids[wallet_names.index(selected_wallet_name)]
         
         # Show wallet balance
         balance = get_wallet_balance(st.session_state.selected_wallet)
-        st.metric("Saldo", f"Rp {balance:,.2f}")
         
-        if st.button("Hapus Dompet", key="delete_wallet"):
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1)); padding: 15px; border-radius: 10px; text-align: center; margin: 15px 0;">
+        <h3 style="color: white; margin: 0;">💰 Saldo Dompet</h3>
+        <h2 style="color: #FFD60A; text-shadow: 0 2px 5px rgba(0,0,0,0.2); margin: 10px 0;">Rp {:,.0f}</h2>
+        </div>
+        """.format(balance), unsafe_allow_html=True)
+        
+        if st.button("🗑️ Hapus Dompet", key="delete_wallet", use_container_width=True):
             delete_wallet(st.session_state.selected_wallet)
             st.session_state.selected_wallet = None
+            st.success("Dompet berhasil dihapus!")
             st.rerun()
     else:
-        st.info("Belum ada dompet. Silakan buat dompet baru.")
+        st.info("📭 Belum ada dompet. Silakan buat dompet baru.")
     
     st.divider()
     
     # Create new wallet
-    with st.expander("➕ Buat Dompet Baru"):
-        new_wallet_name = st.text_input("Nama Dompet")
-        if st.button("Buat Dompet", key="create_wallet"):
+    with st.expander("➕ Buat Dompet Baru", expanded=False):
+        new_wallet_name = st.text_input("Nama Dompet Baru", placeholder="Cth: Tabungan, Operasional, dll")
+        if st.button("✅ Buat Dompet", key="create_wallet", use_container_width=True):
             if new_wallet_name:
                 create_wallet(new_wallet_name)
-                st.success(f"Dompet '{new_wallet_name}' berhasil dibuat!")
+                st.success(f"✅ Dompet '{new_wallet_name}' berhasil dibuat!")
                 st.rerun()
             else:
-                st.error("Nama dompet tidak boleh kosong!")
+                st.error("❌ Nama dompet tidak boleh kosong!")
     
     st.divider()
     
     # Category management
-    st.header("📁 Kategori")
+    st.header("📁 KATEGORI")
     categories = get_categories()
     
     if not categories.empty:
+        st.write(f"📊 Total kategori: **{len(categories)}**")
         for idx, row in categories.iterrows():
             col1, col2 = st.columns([3, 1])
             with col1:
-                st.text(row['name'])
+                st.text(f"🏷️ {row['name']}")
             with col2:
-                if st.button("🗑️", key=f"del_cat_{row['id']}"):
+                if st.button("🗑️", key=f"del_cat_{row['id']}", help="Hapus kategori"):
                     delete_category(row['id'])
+                    st.success("Kategori dihapus!")
                     st.rerun()
     
-    with st.expander("➕ Tambah Kategori"):
-        new_category = st.text_input("Nama Kategori", key="new_category")
-        if st.button("Tambah Kategori", key="add_category"):
+    with st.expander("➕ Tambah Kategori Baru", expanded=False):
+        new_category = st.text_input("Nama Kategori", placeholder="Cth: Makan, Transport, dll", key="new_category")
+        if st.button("✅ Tambah Kategori", key="add_category", use_container_width=True):
             if new_category:
                 if create_category(new_category):
-                    st.success(f"Kategori '{new_category}' berhasil ditambahkan!")
+                    st.success(f"✅ Kategori '{new_category}' berhasil ditambahkan!")
                     st.rerun()
                 else:
-                    st.error("Kategori sudah ada!")
+                    st.error("❌ Kategori sudah ada!")
             else:
-                st.error("Nama kategori tidak boleh kosong!")
+                st.error("❌ Nama kategori tidak boleh kosong!")
 
 # Main content
 if st.session_state.selected_wallet:
     selected_wallet_id = st.session_state.selected_wallet
     wallet_name = wallets[wallets['id'] == selected_wallet_id]['name'].values[0]
     
-    st.header(f"📊 Transaksi - {wallet_name}")
+    st.markdown(f"""
+    <div style="background: linear-gradient(90deg, #FF6B9D, #00D4FF, #6FFF5E); padding: 20px; border-radius: 12px; margin: 20px 0;">
+    <h2 style="color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2); margin: 0;">📊 Pengelolaan Transaksi: <span style="font-weight: 900;">{wallet_name}</span></h2>
+    </div>
+    """, unsafe_allow_html=True)
     
     # Tab layout
     tab1, tab2 = st.tabs(["📝 Tambah/Edit Transaksi", "📋 Daftar Transaksi"])
     
     with tab1:
-        st.subheader("Form Transaksi")
+        st.subheader("📝 Form Transaksi Baru")
         
         categories = get_categories()
         category_options = [""] + categories['name'].tolist() if not categories.empty else [""]
         
-        # Edit mode or create mode
+        # Edit mode atau create mode
         if st.session_state.edit_transaction_id:
             trans_data = get_transaction_by_id(st.session_state.edit_transaction_id)
             if not trans_data.empty:
@@ -266,7 +481,13 @@ if st.session_state.selected_wallet:
                 default_type = trans['type']
                 default_desc = trans['description']
                 default_category = categories[categories['id'] == trans['category_id']]['name'].values[0] if trans['category_id'] and not categories.empty else ""
-                st.info(f"Mode Edit: Transaksi #{trans['id']}")
+                
+                # Edit mode banner
+                st.markdown(f"""
+                    <div class="edit-mode-banner">
+                    ✏️ MODE EDIT - Transaksi #{trans['id']}
+                    </div>
+                """, unsafe_allow_html=True)
             else:
                 st.session_state.edit_transaction_id = None
                 st.rerun()
@@ -277,24 +498,57 @@ if st.session_state.selected_wallet:
             default_desc = ""
             default_category = ""
         
+        # Form layout yang lebih baik
         col1, col2 = st.columns(2)
         with col1:
-            trans_date = st.date_input("Tanggal", value=default_date)
-            trans_type = st.selectbox("Tipe", ["income", "expense"], 
-                                    index=0 if default_type == "income" else 1,
-                                    format_func=lambda x: "Uang Masuk" if x == "income" else "Uang Keluar")
+            trans_date = st.date_input(
+                "📅 Tanggal Transaksi", 
+                value=default_date,
+                help="Pilih tanggal terjadinya transaksi"
+            )
         with col2:
-            amount = st.number_input("Nominal (Rp)", value=default_amount, min_value=0.0, step=1000.0)
-            category = st.selectbox("Kategori", category_options, 
-                                  index=category_options.index(default_category) if default_category in category_options else 0)
+            trans_type = st.selectbox(
+                "💳 Tipe Transaksi",
+                ["income", "expense"],
+                index=0 if default_type == "income" else 1,
+                format_func=lambda x: "📈 Uang Masuk" if x == "income" else "📉 Uang Keluar",
+                help="Pilih apakah ini pemasukan atau pengeluaran"
+            )
         
-        description = st.text_area("Keterangan", value=default_desc)
+        col3, col4 = st.columns(2)
+        with col3:
+            amount = st.number_input(
+                "💵 Nominal (Rp)",
+                value=default_amount,
+                min_value=0.0,
+                step=1000.0,
+                help="Masukkan jumlah uang",
+                format="%,.0f"
+            )
+        with col4:
+            category = st.selectbox(
+                "🏷️ Kategori",
+                category_options,
+                index=category_options.index(default_category) if default_category in category_options else 0,
+                help="Pilih kategori transaksi (opsional)"
+            )
         
-        col1, col2 = st.columns(2)
+        description = st.text_area(
+            "📝 Keterangan / Memo",
+            value=default_desc,
+            height=100,
+            placeholder="Tulis deskripsi transaksi di sini...",
+            help="Penjelasan singkat tentang transaksi"
+        )
+        
+        # Action buttons
+        st.divider()
+        col1, col2, col3 = st.columns([2, 2, 1])
+        
         with col1:
-            if st.button("💾 Simpan Transaksi", key="save_trans"):
+            if st.button("💾 Simpan Transaksi", key="save_trans", use_container_width=True):
                 if amount <= 0:
-                    st.error("Nominal harus lebih dari 0!")
+                    st.error("❌ Nominal harus lebih dari Rp 0!")
                 else:
                     category_id = None
                     if category and not categories.empty:
@@ -305,67 +559,130 @@ if st.session_state.selected_wallet:
                     if st.session_state.edit_transaction_id:
                         update_transaction(st.session_state.edit_transaction_id, trans_date, amount, 
                                          trans_type, description, category_id)
-                        st.success("Transaksi berhasil diperbarui!")
+                        st.success("✅ Transaksi berhasil diperbarui!")
                         st.session_state.edit_transaction_id = None
                     else:
                         create_transaction(selected_wallet_id, trans_date, amount, 
                                         trans_type, description, category_id)
-                        st.success("Transaksi berhasil ditambahkan!")
+                        st.success("✅ Transaksi berhasil ditambahkan!")
                     st.rerun()
         
         with col2:
             if st.session_state.edit_transaction_id:
-                if st.button("❌ Batal Edit", key="cancel_edit"):
+                if st.button("❌ Batal Edit", key="cancel_edit", use_container_width=True):
                     st.session_state.edit_transaction_id = None
                     st.rerun()
+            else:
+                st.button("🔄 Reset", key="reset_form", use_container_width=True, 
+                         help="Kosongkan form untuk transaksi baru")
+        
+        with col3:
+            st.write("")  # Spacer
     
     with tab2:
-        st.subheader("Daftar Transaksi")
+        st.subheader("📋 Daftar Semua Transaksi")
         
         transactions = get_transactions(selected_wallet_id)
         
         if not transactions.empty:
-            # Summary
+            # Summary cards
             total_income = transactions[transactions['type'] == 'income']['amount'].sum()
             total_expense = transactions[transactions['type'] == 'expense']['amount'].sum()
+            net_balance = total_income - total_expense
             
             col1, col2, col3 = st.columns(3)
-            col1.metric("Total Pemasukan", f"Rp {total_income:,.2f}")
-            col2.metric("Total Pengeluaran", f"Rp {total_expense:,.2f}")
-            col3.metric("Saldo Bersih", f"Rp {(total_income - total_expense):,.2f}")
+            
+            with col1:
+                st.markdown("""
+                <div style="background: linear-gradient(135deg, #6FFF5E, #90EE90); padding: 20px; border-radius: 12px; text-align: center;">
+                <h4 style="-webkit-text-fill-color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">📈 Pemasukan</h4>
+                <h2 style="-webkit-text-fill-color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">Rp {:,.0f}</h2>
+                </div>
+                """.format(total_income), unsafe_allow_html=True)
+            
+            with col2:
+                st.markdown("""
+                <div style="background: linear-gradient(135deg, #FF6B9D, #FF8AB5); padding: 20px; border-radius: 12px; text-align: center;">
+                <h4 style="-webkit-text-fill-color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">📉 Pengeluaran</h4>
+                <h2 style="-webkit-text-fill-color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">Rp {:,.0f}</h2>
+                </div>
+                """.format(total_expense), unsafe_allow_html=True)
+            
+            with col3:
+                balance_color = "#6FFF5E" if net_balance >= 0 else "#FF6B9D"
+                st.markdown("""
+                <div style="background: linear-gradient(135deg, {}, {}); padding: 20px; border-radius: 12px; text-align: center;">
+                <h4 style="-webkit-text-fill-color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">💰 Saldo Bersih</h4>
+                <h2 style="-webkit-text-fill-color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">Rp {:,.0f}</h2>
+                </div>
+                """.format(balance_color, balance_color if balance_color == "#6FFF5E" else "#FF8AB5", net_balance), unsafe_allow_html=True)
             
             st.divider()
             
-            # Transaction table
-            for idx, row in transactions.iterrows():
+            # Filter section
+            col1, col2 = st.columns(2)
+            with col1:
+                filter_type = st.selectbox(
+                    "🔍 Filter Tipe",
+                    ["Semua", "Pemasukan", "Pengeluaran"],
+                    help="Tampilkan transaksi berdasarkan tipe"
+                )
+            
+            # Apply filter
+            if filter_type == "Pemasukan":
+                filtered_trans = transactions[transactions['type'] == 'income']
+            elif filter_type == "Pengeluaran":
+                filtered_trans = transactions[transactions['type'] == 'expense']
+            else:
+                filtered_trans = transactions
+            
+            # Display transactions
+            st.write(f"📊 Total transaksi: **{len(filtered_trans)}** transaksi")
+            st.divider()
+            
+            for idx, row in filtered_trans.iterrows():
                 with st.container():
-                    col1, col2, col3, col4, col5, col6, col7 = st.columns([2, 2, 3, 3, 3, 1, 1])
-                    
                     type_emoji = "📈" if row['type'] == 'income' else "📉"
-                    type_color = "green" if row['type'] == 'income' else "red"
+                    type_color = "#6FFF5E" if row['type'] == 'income' else "#FF6B9D"
+                    bg_gradient = "linear-gradient(90deg, rgba(111, 255, 94, 0.1), rgba(111, 255, 94, 0.05))" if row['type'] == 'income' else "linear-gradient(90deg, rgba(255, 107, 157, 0.1), rgba(255, 107, 157, 0.05))"
+                    
+                    col1, col2, col3, col4, col5, col6 = st.columns([1.5, 1.5, 2, 2, 0.8, 0.8])
                     
                     with col1:
-                        st.text(row['date'])
+                        st.text(f"📅 {row['date']}")
+                    
                     with col2:
-                        amount_str = f"Rp {row['amount']:,.2f}"
-                        st.markdown(f"{type_emoji} <span style='color:{type_color}'>{amount_str}</span>", unsafe_allow_html=True)
+                        st.markdown(f"<h4 style='color: {type_color}; margin: 0;'>{type_emoji}</h4>", unsafe_allow_html=True)
+                    
                     with col3:
-                        st.text("Uang Masuk" if row['type'] == 'income' else "Uang Keluar")
+                        st.markdown("**Rp {:,.0f}**".format(row['amount']))
+                    
                     with col4:
-                        st.text(row['description'] if row['description'] else "-")
+                        cat = row['category'] if row['category'] else "—"
+                        desc = row['description'] if row['description'] else "—"
+                        st.text(f"🏷️ {cat} | {desc[:20]}...")
+                    
                     with col5:
-                        st.text(row['category'] if row['category'] else "-")
-                    with col6:
-                        if st.button("✏️", key=f"edit_{row['id']}"):
+                        if st.button("✏️ Edit", key=f"edit_{row['id']}", help="Edit transaksi ini"):
                             st.session_state.edit_transaction_id = row['id']
                             st.rerun()
-                    with col7:
-                        if st.button("🗑️", key=f"del_{row['id']}"):
+                    
+                    with col6:
+                        if st.button("🗑️", key=f"del_{row['id']}", help="Hapus transaksi ini"):
                             delete_transaction(row['id'])
+                            st.success("✅ Transaksi berhasil dihapus!")
                             st.rerun()
                     
                     st.divider()
         else:
-            st.info("Belum ada transaksi. Silakan tambahkan transaksi baru!")
+            st.info("📭 Belum ada transaksi. Silakan tambahkan transaksi baru di tab 'Tambah/Edit Transaksi'!")
 else:
-    st.info("👈 Silakan pilih atau buat dompet di sidebar untuk memulai.")
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #00D4FF, #6FFF5E); padding: 40px; border-radius: 15px; text-align: center; margin: 50px 0;">
+    <h1 style="color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2); margin: 0;">👈 Mulai Kelola Keuangan Anda!</h1>
+    <h3 style="color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2); margin-top: 15px;">Silakan buat atau pilih dompet di sidebar untuk memulai pencatatan transaksi.</h3>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Tambahkan info box
+    st.info("💡 **Tips:** Gunakan sidebar di kiri untuk mengelola dompet dan kategori transaksi Anda.")
