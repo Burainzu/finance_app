@@ -24,17 +24,15 @@ def set_soda_theme():
         
         /* Header styling */
         .stTitle {
-            color: #FF6B9D !important;
-            text-shadow: 0 2px 10px rgba(255, 107, 157, 0.3);
+            color: #1a1a2e !important;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             font-weight: 900;
         }
         
         h1, h2, h3 {
-            background: linear-gradient(90deg, #FF6B9D 0%, #00D4FF 50%, #6FFF5E 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 800;
+            color: #1a1a2e !important;
+            font-weight: 800 !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
         }
         
         /* Sidebar styling */
@@ -394,9 +392,9 @@ with st.sidebar:
         balance = get_wallet_balance(st.session_state.selected_wallet)
         
         st.markdown("""
-        <div style="background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1)); padding: 15px; border-radius: 10px; text-align: center; margin: 15px 0;">
-        <h3 style="color: white; margin: 0;">💰 Saldo Dompet</h3>
-        <h2 style="color: #FFD60A; text-shadow: 0 2px 5px rgba(0,0,0,0.2); margin: 10px 0;">Rp {:,.0f}</h2>
+        <div style="background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.15)); padding: 15px; border-radius: 10px; text-align: center; margin: 15px 0; border: 2px solid #FF6B9D;">
+        <h3 style="color: #1a1a2e; margin: 0; font-weight: 900;">💰 Saldo Dompet</h3>
+        <h2 style="color: #FF6B9D; text-shadow: 0 1px 3px rgba(0,0,0,0.1); margin: 10px 0; font-weight: 900;">Rp {:,.0f}</h2>
         </div>
         """.format(balance), unsafe_allow_html=True)
         
@@ -457,8 +455,8 @@ if st.session_state.selected_wallet:
     wallet_name = wallets[wallets['id'] == selected_wallet_id]['name'].values[0]
     
     st.markdown(f"""
-    <div style="background: linear-gradient(90deg, #FF6B9D, #00D4FF, #6FFF5E); padding: 20px; border-radius: 12px; margin: 20px 0;">
-    <h2 style="color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2); margin: 0;">📊 Pengelolaan Transaksi: <span style="font-weight: 900;">{wallet_name}</span></h2>
+    <div style="background: linear-gradient(90deg, rgba(255,107,157,0.15), rgba(0,212,255,0.15), rgba(111,255,94,0.15)); padding: 20px; border-radius: 12px; margin: 20px 0; border: 2px solid #FF6B9D;">
+    <h2 style="color: #1a1a2e; text-shadow: 0 1px 3px rgba(0,0,0,0.05); margin: 0; font-weight: 900;">📊 Pengelolaan Transaksi: <span style="font-weight: 900; color: #FF6B9D;">{wallet_name}</span></h2>
     </div>
     """, unsafe_allow_html=True)
     
@@ -593,28 +591,35 @@ if st.session_state.selected_wallet:
             
             with col1:
                 st.markdown("""
-                <div style="background: linear-gradient(135deg, #6FFF5E, #90EE90); padding: 20px; border-radius: 12px; text-align: center;">
-                <h4 style="-webkit-text-fill-color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">📈 Pemasukan</h4>
-                <h2 style="-webkit-text-fill-color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">Rp {:,.0f}</h2>
+                <div style="background: linear-gradient(135deg, rgba(111,255,94,0.2), rgba(144,238,144,0.2)); padding: 20px; border-radius: 12px; text-align: center; border: 2px solid #6FFF5E;">
+                <h4 style="color: #1a1a2e; text-shadow: 0 1px 3px rgba(0,0,0,0.05); font-weight: 900;">📈 Pemasukan</h4>
+                <h2 style="color: #6FFF5E; text-shadow: 0 1px 3px rgba(0,0,0,0.05); font-weight: 900;">Rp {:,.0f}</h2>
                 </div>
                 """.format(total_income), unsafe_allow_html=True)
             
             with col2:
                 st.markdown("""
-                <div style="background: linear-gradient(135deg, #FF6B9D, #FF8AB5); padding: 20px; border-radius: 12px; text-align: center;">
-                <h4 style="-webkit-text-fill-color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">📉 Pengeluaran</h4>
-                <h2 style="-webkit-text-fill-color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">Rp {:,.0f}</h2>
+                <div style="background: linear-gradient(135deg, rgba(255,107,157,0.2), rgba(255,138,181,0.2)); padding: 20px; border-radius: 12px; text-align: center; border: 2px solid #FF6B9D;">
+                <h4 style="color: #1a1a2e; text-shadow: 0 1px 3px rgba(0,0,0,0.05); font-weight: 900;">📉 Pengeluaran</h4>
+                <h2 style="color: #FF6B9D; text-shadow: 0 1px 3px rgba(0,0,0,0.05); font-weight: 900;">Rp {:,.0f}</h2>
                 </div>
                 """.format(total_expense), unsafe_allow_html=True)
             
             with col3:
                 balance_color = "#6FFF5E" if net_balance >= 0 else "#FF6B9D"
+                border_color = "2px solid #6FFF5E" if net_balance >= 0 else "2px solid #FF6B9D"
+                text_color = "#1a1a2e"
+                val_color = balance_color
                 st.markdown("""
-                <div style="background: linear-gradient(135deg, {}, {}); padding: 20px; border-radius: 12px; text-align: center;">
-                <h4 style="-webkit-text-fill-color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">💰 Saldo Bersih</h4>
-                <h2 style="-webkit-text-fill-color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">Rp {:,.0f}</h2>
+                <div style="background: linear-gradient(135deg, rgba({}, {}, {}, 0.1), rgba({}, {}, {}, 0.05)); padding: 20px; border-radius: 12px; text-align: center; border: {}">
+                <h4 style="color: {}; text-shadow: 0 1px 3px rgba(0,0,0,0.05); font-weight: 900;">💰 Saldo Bersih</h4>
+                <h2 style="color: {}; text-shadow: 0 1px 3px rgba(0,0,0,0.05); font-weight: 900;">Rp {:,.0f}</h2>
                 </div>
-                """.format(balance_color, balance_color if balance_color == "#6FFF5E" else "#FF8AB5", net_balance), unsafe_allow_html=True)
+                """.format(
+                    int(balance_color[1:3], 16), int(balance_color[3:5], 16), int(balance_color[5:7], 16),
+                    int(balance_color[1:3], 16), int(balance_color[3:5], 16), int(balance_color[5:7], 16),
+                    border_color, text_color, val_color, net_balance
+                ), unsafe_allow_html=True)
             
             st.divider()
             
@@ -677,9 +682,9 @@ if st.session_state.selected_wallet:
             st.info("📭 Belum ada transaksi. Silakan tambahkan transaksi baru di tab 'Tambah/Edit Transaksi'!")
 else:
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #00D4FF, #6FFF5E); padding: 40px; border-radius: 15px; text-align: center; margin: 50px 0;">
-    <h1 style="color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2); margin: 0;">👈 Mulai Kelola Keuangan Anda!</h1>
-    <h3 style="color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.2); margin-top: 15px;">Silakan buat atau pilih dompet di sidebar untuk memulai pencatatan transaksi.</h3>
+    <div style="background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(111,255,94,0.15)); padding: 40px; border-radius: 15px; text-align: center; margin: 50px 0; border: 2px solid #00D4FF;">
+    <h1 style="color: #1a1a2e; text-shadow: 0 1px 3px rgba(0,0,0,0.05); margin: 0; font-weight: 900;">👈 Mulai Kelola Keuangan Anda!</h1>
+    <h3 style="color: #1a1a2e; text-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-top: 15px; font-weight: 700;">Silakan buat atau pilih dompet di sidebar untuk memulai pencatatan transaksi.</h3>
     </div>
     """, unsafe_allow_html=True)
     
