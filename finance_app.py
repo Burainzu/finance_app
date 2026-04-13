@@ -188,6 +188,32 @@ def set_soda_theme():
             margin-bottom: 20px;
             box-shadow: 0 4px 15px rgba(255, 214, 10, 0.3);
         }
+        
+        /* Global text color - ensure all text is dark */
+        * {
+            color: #1a1a2e !important;
+        }
+        
+        /* Override specific elements */
+        .stMarkdown p, .stMarkdown span, .stMarkdown div, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown h5, .stMarkdown h6 {
+            color: #1a1a2e !important;
+        }
+        
+        .stText, .stCaption, .stMetric {
+            color: #1a1a2e !important;
+        }
+        
+        /* Labels for inputs */
+        .stSelectbox label, .stDateInput label, .stNumberInput label, .stTextInput label, .stTextArea label {
+            color: #1a1a2e !important;
+            font-weight: 600 !important;
+        }
+        
+        /* Tab labels */
+        .stTabs [data-baseweb="tab-list"] button {
+            color: #1a1a2e !important;
+            font-weight: 700 !important;
+        }
         </style>
     """, unsafe_allow_html=True)
 
@@ -648,23 +674,22 @@ if st.session_state.selected_wallet:
                 with st.container():
                     type_emoji = "📈" if row['type'] == 'income' else "📉"
                     type_color = "#6FFF5E" if row['type'] == 'income' else "#FF6B9D"
-                    bg_gradient = "linear-gradient(90deg, rgba(111, 255, 94, 0.1), rgba(111, 255, 94, 0.05))" if row['type'] == 'income' else "linear-gradient(90deg, rgba(255, 107, 157, 0.1), rgba(255, 107, 157, 0.05))"
                     
                     col1, col2, col3, col4, col5, col6 = st.columns([1.5, 1.5, 2, 2, 0.8, 0.8])
                     
                     with col1:
-                        st.text(f"📅 {row['date']}")
+                        st.markdown(f"<div style='color: #1a1a2e; font-weight: 600;'>📅 {row['date']}</div>", unsafe_allow_html=True)
                     
                     with col2:
-                        st.markdown(f"<h4 style='color: {type_color}; margin: 0;'>{type_emoji}</h4>", unsafe_allow_html=True)
+                        st.markdown(f"<div style='color: {type_color}; font-size: 20px; text-align: center;'>{type_emoji}</div>", unsafe_allow_html=True)
                     
                     with col3:
-                        st.markdown("**Rp {:,.0f}**".format(row['amount']))
+                        st.markdown(f"<div style='color: #1a1a2e; font-weight: 700; font-size: 16px;'>Rp {row['amount']:,.0f}</div>", unsafe_allow_html=True)
                     
                     with col4:
                         cat = row['category'] if row['category'] else "—"
                         desc = row['description'] if row['description'] else "—"
-                        st.text(f"🏷️ {cat} | {desc[:20]}...")
+                        st.markdown(f"<div style='color: #1a1a2e; font-size: 14px;'>🏷️ <b>{cat}</b> | {desc[:20]}...</div>", unsafe_allow_html=True)
                     
                     with col5:
                         if st.button("✏️ Edit", key=f"edit_{row['id']}", help="Edit transaksi ini"):
