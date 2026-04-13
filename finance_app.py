@@ -1,6 +1,6 @@
 import streamlit as st
 import sqlite3
-import pandas as pd
+import pandas as pd  # type: ignore
 from datetime import date
 
 # Custom CSS untuk tema soda yang cerah dan menyegarkan
@@ -77,7 +77,7 @@ def set_soda_theme():
         .stDateInput input,
         .stSelectbox select,
         .stTextArea textarea {
-            background-color: white !important;
+            background-color: #FFFFFF !important;
             border: 2px solid #00D4FF !important;
             border-radius: 10px !important;
             padding: 10px !important;
