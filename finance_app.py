@@ -303,6 +303,18 @@ def get_wallet_balance(wallet_id):
     conn.close()
     return balance
 
+# Get total balance from all wallets
+def get_total_all_wallets_balance():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT COALESCE(SUM(CASE WHEN type = 'income' THEN amount ELSE -amount END), 0)
+        FROM transactions
+    ''')
+    total_balance = cursor.fetchone()[0]
+    conn.close()
+    return total_balance
+
 # Category functions
 def create_category(name):
     conn = get_connection()
@@ -401,6 +413,18 @@ if 'edit_transaction_id' not in st.session_state:
 # Sidebar for wallet selection
 with st.sidebar:
     st.header("👛 KELOLA DOMPET")
+    
+    # Display total balance from all wallets
+    total_balance = get_total_all_wallets_balance()
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, rgba(111,255,94,0.3), rgba(0,212,255,0.3)); padding: 18px; border-radius: 12px; text-align: center; margin: 15px 0; border: 3px solid #6FFF5E; box-shadow: 0 6px 20px rgba(111,255,94,0.3);">
+    <h3 style="color: white; margin: 0; font-weight: 900; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">💎 Total Semua Dompet</h3>
+    <h2 style="color: #6FFF5E; text-shadow: 0 2px 5px rgba(0,0,0,0.3); margin: 12px 0; font-weight: 900; font-size: 28px;">Rp {:,.0f}</h2>
+    </div>
+    """.format(total_balance), unsafe_allow_html=True)
+    
+    st.divider()
+    
     wallets = get_wallets()
     
     if not wallets.empty:
