@@ -90,7 +90,7 @@ def set_soda_theme():
         .stMultiSelect option,
         select option {
             background-color: #FFFFFF !important;
-            color: #1a1a2e !important;
+            color: #FFFFFF !important;
         }
         
         .stTextInput input:focus,
