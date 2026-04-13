@@ -76,6 +76,7 @@ def set_soda_theme():
         .stNumberInput input,
         .stDateInput input,
         .stSelectbox select,
+        .stMultiSelect select,
         .stTextArea textarea {
             background-color: #FFFFFF !important;
             border: 2px solid #00D4FF !important;
@@ -84,11 +85,19 @@ def set_soda_theme():
             color: #1a1a2e !important;
             transition: all 0.3s ease !important;
         }
+
+        .stSelectbox option,
+        .stMultiSelect option,
+        select option {
+            background-color: #FFFFFF !important;
+            color: #1a1a2e !important;
+        }
         
         .stTextInput input:focus,
         .stNumberInput input:focus,
         .stDateInput input:focus,
         .stSelectbox select:focus,
+        .stMultiSelect select:focus,
         .stTextArea textarea:focus {
             border-color: #FF6B9D !important;
             box-shadow: 0 0 15px rgba(255, 107, 157, 0.4) !important;
