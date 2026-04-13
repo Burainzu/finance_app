@@ -513,7 +513,7 @@ if st.session_state.selected_wallet:
                 default_amount = trans['amount']
                 default_type = trans['type']
                 default_desc = trans['description']
-                default_category = categories[categories['id'] == trans['category_id']]['name'].values[0] if trans['category_id'] and not categories.empty else ""
+                default_category = categories[categories['id'] == trans['category_id']]['name'].values[0] if trans['category_id'] and not categories.empty and len(categories[categories['id'] == trans['category_id']]) > 0 else ""
                 
                 # Edit mode banner
                 st.markdown(f"""
